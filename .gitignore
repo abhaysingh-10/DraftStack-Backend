@@ -12,5 +12,5 @@ db.sqlite3
 # Mac
 .DS_Store
 
-# Environment variables (important for later)
-.envgit rm -r --cached .
+# Environment variables
+.env
