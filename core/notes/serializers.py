@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Notes
 
-
+# Using .ModelSerializer
 class NoteSerializer(serializers.ModelSerializer):
     
     id = serializers.IntegerField(read_only = True)
@@ -19,7 +19,7 @@ class NoteSerializer(serializers.ModelSerializer):
     
     
 
-# another way to add 
+# another way to add normal method .Serializer
   
 # class NoteSerializer(serializers.Serializer):
 #     id = serializers.IntegerField()
