@@ -21,7 +21,7 @@ def get_notes(request):
     if request.method == 'GET':
             notes = Notes.objects.all()
             serializer = NoteSerializer(notes,many = True)
-            return Response(serializer.data)
+            return Response(serializer.data,status= status.HTTP_200_OK)
         
      # POST — create a new note
      
@@ -57,14 +57,14 @@ def note_detail(request, pk):
     
     if request.method == 'GET':
         serializer = NoteSerializer(note)
-        return Response(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
     
     # PUT - update entire note 
     if request.method == 'PUT':
         serializer = NoteSerializer(note, data = request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
@@ -73,7 +73,7 @@ def note_detail(request, pk):
         serializer = NoteSerializer(note,data = request.data,partial = True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST)
         
@@ -81,4 +81,6 @@ def note_detail(request, pk):
     
     if request.method == 'DELETE':
         note.delete()
-        return Response({"Message: Not Found"},status = status.HTTP_204_NO_CONTENT)  
+        return Response({"Message: Not Found"},status = status.HTTP_204_NO_CONTENT)
+    
+     
