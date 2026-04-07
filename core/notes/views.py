@@ -34,7 +34,7 @@ def get_notes(request):
              return Response(serializer.data,status= status.HTTP_201_CREATED)  # Step 3 - save to DB
          
          else:
-             return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
          
          
 #  GET SINGLE DATA FROM THE URL  /api/notes/1 2 3 ..        
@@ -49,7 +49,7 @@ def note_detail(request, pk):
     try:  #step 1
         note = Notes.objects.get(pk = pk) 
     except Notes.DoesNotExist:
-        return Response({"Error: Note not Found "}, status= status.HTTP_404_NOT_FOUND)
+        return Response({"Error":" Note not Found "}, status= status.HTTP_404_NOT_FOUND)
     
     #CRUD OPERATION USING FUNCTION BASED VIEWS
     
@@ -81,6 +81,6 @@ def note_detail(request, pk):
     
     if request.method == 'DELETE':
         note.delete()
-        return Response({"Message: Not Found"},status = status.HTTP_204_NO_CONTENT)
+        return Response({"Message": "Not Found"},status = status.HTTP_204_NO_CONTENT)
     
      
