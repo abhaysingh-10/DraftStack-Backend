@@ -15,6 +15,8 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notes                                     # WHICH MODEL TO USE 
         fields = ['id','title','content','created_at']    # WHICH FIELD TO CHOOSE
+        read_only_fields = ['id','created_at']
+        
         
     
     

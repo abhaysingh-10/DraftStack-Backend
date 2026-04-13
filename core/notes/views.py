@@ -7,6 +7,8 @@ from .serializers import NoteSerializer
 from rest_framework import status  # for status code 
 from rest_framework.views import APIView # for class based  views
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -19,9 +21,12 @@ from rest_framework import viewsets
             
 class NoteViewSet(viewsets.ViewSet):
     
+    authentication_classes =[TokenAuthentication]
+    permission_classes =[IsAuthenticated]
+    
     # GET get all notes /api/notes
     def list(self,request):
-        note = Notes.objects.all()
+        note = Notes.objects.filter(user=request.user) # filter by logged in user 
         serializer = NoteSerializer(note,many = True)
         return Response(serializer.data,status = status.HTTP_200_OK)
     
@@ -29,7 +34,7 @@ class NoteViewSet(viewsets.ViewSet):
     def create(self,request):
         serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user = request.user) # automatically set owner
             return Response(serializer.data,status= status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
@@ -37,7 +42,7 @@ class NoteViewSet(viewsets.ViewSet):
     # GET single note /api/notes/1 2 3 4...
     def retrieve(self,request,pk = None):
         try:
-            note = Notes.objects.get(pk = pk)
+            note = Notes.objects.get(pk = pk,user = request.user) #check user owner
         except Notes.DoesNotExist:
             return  Response({"error ":"Note Not Found"},status=status.HTTP_404_NOT_FOUND)
         serializer = NoteSerializer(note)
@@ -46,7 +51,7 @@ class NoteViewSet(viewsets.ViewSet):
      # PUT update note  /api/notes/1/
     def update(self,request,pk=None):
         try:
-            note = Notes.objects.get(pk = pk)
+            note = Notes.objects.get(pk = pk,user =request.user)
         except Notes.DoesNotExist:
             return Response({"Error":"Note Not Found"},status = status.HTTP_404_NOT_FOUND)
         serializer = NoteSerializer(note,data = request.data)
@@ -59,7 +64,7 @@ class NoteViewSet(viewsets.ViewSet):
     #PATCH update partial /ai/notes/1
     def partial_update(self,request,pk=None):
         try:
-            note = Notes.objects.get(pk = pk)
+            note = Notes.objects.get(pk = pk,user = request.user)
         except Notes.DoesNotExist:
             return Response({"Error":"Note Not Found"},status = status.HTTP_404_NOT_FOUND)
         serializer = NoteSerializer(note,data = request.data ,partial = True)
@@ -73,7 +78,7 @@ class NoteViewSet(viewsets.ViewSet):
     #Delete delete the note /api/notes/1 2 3
     def destroy(self,request,pk = None):
         try:
-            note = Notes.objects.get(pk = pk)
+            note = Notes.objects.get(pk = pk,user =request.user)
         except Notes.DoesNotExist:
             return Response({"Error":"Note Not Found"},status= status.HTTP_404_NOT_FOUND)
         note.delete()
