@@ -23,8 +23,13 @@ from .permissions import IsOwner # Custom Permissions
             
 class NoteViewSet(viewsets.ViewSet):
     
+
     authentication_classes =[TokenAuthentication]
     permission_classes =[IsAuthenticated , IsOwner] # custom permission 
+    
+   
+
+        
     
     # GET get all notes /api/notes
     def list(self,request):
@@ -96,7 +101,32 @@ class NoteViewSet(viewsets.ViewSet):
         return Response({"Message":"Note Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)
          
           
-        
+    
+    '''
+     #helper function for custom permissions 
+    
+    def get_object(self,request,pk):
+        try:
+            note = Notes.objects.get(pk=pk)
+            self.check_object_permissions(note)
+            return note
+        except Notes.DoesNotExist:
+            return None
+            
+    now in the retrieve update partial update and destroy function 
+    we can use instead of 
+    
+    this -> note = Notes.objects.get(pk =pk)
+            self.check_object_permissions(request,note) #check user 
+            
+    to this -> def retrieve(self, request, pk=None):
+                   note = self.get_object(request, pk)
+                   if not note:
+                   return Response({"error": "Note Not Found"}, status=404)
+
+                   serializer = NoteSerializer(note)
+                   return Response(serializer.data)
+    ''' 
     
     
     
