@@ -21,9 +21,9 @@ class NoteSerializer(serializers.ModelSerializer):
     
     
 
-# another way to add normal method .Serializer
+# another way to add  traditional method .Serializer
   
-# class NoteSerializer(serializers.Serializer):
+# class NoteSerializer(serializers.Serializer)
 #     id = serializers.IntegerField()
 #     title = serializers.CharField(max_length=200)
 #     content = serializers.CharField()

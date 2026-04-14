@@ -85,7 +85,9 @@ def logout(request):
     # Delete token from DB - next time user must login again to get new token
     request.user.auth_token.delete()
     return Response({"Message":"Logout Successfully"},status=status.HTTP_200_OK)
-    
+
+
+
     
     
     
