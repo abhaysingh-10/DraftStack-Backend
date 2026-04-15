@@ -43,9 +43,10 @@ class NoteViewSet(viewsets.ViewSet):
         search = request.query_params.get('search',None)
         
         # if search → only filter if user actually sent a search word
-        # title__icontains=search → this is a Django ORM lookup
+        # title__icontains=search → this is a Django ORM lookup __ double underscore
         if search:
-            note = note.filter(title__icontains=search)
+            # | OR checking if the title contains or the content contains the value 
+            note = note.filter(title__icontains=search) | note.filter(content__icontains=search) 
          
         serializer = NoteSerializer(note,many = True)
         return Response(serializer.data,status = status.HTTP_200_OK)
