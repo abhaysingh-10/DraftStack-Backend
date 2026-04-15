@@ -28,12 +28,25 @@ class NoteViewSet(viewsets.ViewSet):
     permission_classes =[IsAuthenticated , IsOwner] # custom permission 
     
    
-
+        
+   
         
     
     # GET get all notes /api/notes
     def list(self,request):
         note = Notes.objects.filter(user=request.user) # filter by logged in user 
+        
+        # Filtering the notes
+        #request.query_params → this is a dictionary of everything after ? in the URL
+        # .get look for a key called search, if not found return None
+
+        search = request.query_params.get('search',None)
+        
+        # if search → only filter if user actually sent a search word
+        # title__icontains=search → this is a Django ORM lookup
+        if search:
+            note = note.filter(title__icontains=search)
+         
         serializer = NoteSerializer(note,many = True)
         return Response(serializer.data,status = status.HTTP_200_OK)
     
@@ -99,10 +112,10 @@ class NoteViewSet(viewsets.ViewSet):
             return Response({"Error":"Note Not Found"},status= status.HTTP_404_NOT_FOUND)
         note.delete()
         return Response({"Message":"Note Deleted Successfully"},status=status.HTTP_204_NO_CONTENT)
-         
-          
     
-    '''
+    
+         
+'''
      #helper function for custom permissions 
     
     def get_object(self,request,pk):
@@ -112,10 +125,8 @@ class NoteViewSet(viewsets.ViewSet):
             return note
         except Notes.DoesNotExist:
             return None
-            
     now in the retrieve update partial update and destroy function 
     we can use instead of 
-    
     this -> note = Notes.objects.get(pk =pk)
             self.check_object_permissions(request,note) #check user 
             
@@ -126,7 +137,8 @@ class NoteViewSet(viewsets.ViewSet):
 
                    serializer = NoteSerializer(note)
                    return Response(serializer.data)
-    ''' 
+'''    
+        
     
     
     
