@@ -11,6 +11,13 @@ class Notes(models.Model):
     def __str__(self):
         return self.title
     
+class SubTask(models.Models):
+    #one to many relationship 
+    note = models.ForeignKey(notes,on_delete=models.CASCADE,related_name='subtask')
+    title = models.CharField(max_length=200)
+    completed = models.BooleanField(default= False)
     
-    
-    
+    def __str__(self):
+        self.title
+        
+        
