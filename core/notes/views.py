@@ -37,6 +37,7 @@ class NoteViewSet(viewsets.ViewSet):
         note = Notes.objects.filter(user=request.user) # filter by logged in user 
         
         # Filtering the notes
+        
         #request.query_params → this is a dictionary of everything after ? in the URL
         # .get look for a key called search, if not found return None
 
@@ -48,6 +49,13 @@ class NoteViewSet(viewsets.ViewSet):
             # | OR checking if the title contains or the content contains the value 
             note = note.filter(title__icontains=search) | note.filter(content__icontains=search) 
          
+         #Adding the date field for Filtering    
+        date = request.query_params.get('date',None)
+        
+        if date:
+            note = note.filter(created_at__date=date)
+            
+            
         serializer = NoteSerializer(note,many = True)
         return Response(serializer.data,status = status.HTTP_200_OK)
     
