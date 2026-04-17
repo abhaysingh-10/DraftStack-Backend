@@ -1,31 +1,19 @@
 from rest_framework import serializers
+from .models import Notes,SubTask
 
-from .models import Notes
 
-# Using .ModelSerializer
+class SubTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubTask
+        fields = ['id','title','completed']
+        
 class NoteSerializer(serializers.ModelSerializer):
-    
-    id = serializers.IntegerField(read_only = True)
-    title = serializers.CharField(max_length = 200)
-    content = serializers.CharField()
-    created_at = serializers.DateTimeField(read_only=True)
-    
-    
+    subtasks = SubTaskSerializer(many= True,read_only=True) # nested Serializer subtask field 
     
     class Meta:
-        model = Notes                                     # WHICH MODEL TO USE 
-        fields = ['id','title','content','created_at']    # WHICH FIELD TO CHOOSE
+        model =Notes
+        fields = ['id','title','content','created_at','subtasks']
         read_only_fields = ['id','created_at']
         
-        
     
-    
-
-# another way to add  traditional method .Serializer
-  
-# class NoteSerializer(serializers.Serializer)
-#     id = serializers.IntegerField()
-#     title = serializers.CharField(max_length=200)
-#     content = serializers.CharField()
-#     created_at = serializers.DateTimeField(auto_now_add=True)
     
