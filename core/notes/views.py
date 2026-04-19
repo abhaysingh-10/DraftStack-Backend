@@ -10,13 +10,18 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner # Custom Permissions
+from rest_framework.pagination import PageNumberPagination
 
 
 
 
 
 
-
+#Pagination
+class NotesPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
             
             
@@ -26,6 +31,9 @@ class NoteViewSet(viewsets.ViewSet):
 
     authentication_classes =[TokenAuthentication]
     permission_classes =[IsAuthenticated , IsOwner] # custom permission 
+    pagination_class = NotesPagination # Added Pagination
+    
+    
     
    
         
@@ -55,9 +63,13 @@ class NoteViewSet(viewsets.ViewSet):
         if date:
             note = note.filter(created_at__date=date)
             
+        #Pagination Concept 
+        paginator = self.pagination_class()
+        paginated_notes = paginator.paginate_queryset(note,request)
+                    
             
-        serializer = NoteSerializer(note,many = True)
-        return Response(serializer.data,status = status.HTTP_200_OK)
+        serializer = NoteSerializer(paginated_notes,many = True)
+        return paginator.get_paginated_response(serializer.data)
     
     # POST create note /api/notes
     def create(self,request):
