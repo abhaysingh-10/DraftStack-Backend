@@ -1,7 +1,7 @@
 # Notes App — Backend API
 
 Built this while learning Django REST Framework.
-Goal is to become a full stack freelancer by July 1, 2026.
+Goal is to become a full Stack Application Developer
 
 ## What I Built
 A notes API where users can register, login and manage 
