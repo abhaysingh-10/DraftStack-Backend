@@ -7,7 +7,8 @@ from .serializers import NoteSerializer
 from rest_framework import status  # for status code 
 from rest_framework.views import APIView # for class based  views
 from rest_framework import viewsets
-from rest_framework.authentication import TokenAuthentication
+# from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwner # Custom Permissions
 from rest_framework.pagination import PageNumberPagination
@@ -29,7 +30,7 @@ class NotesPagination(PageNumberPagination):
 class NoteViewSet(viewsets.ViewSet):
     
 
-    authentication_classes =[TokenAuthentication]
+    authentication_classes =[JWTAuthentication] # JWT AUTH
     permission_classes =[IsAuthenticated , IsOwner] # custom permission 
     pagination_class = NotesPagination # Added Pagination
     
