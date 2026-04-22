@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Notes,SubTask
-# Register your models here.
+
 
 @admin.register(Notes)
 

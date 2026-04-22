@@ -6,8 +6,6 @@ urlpatterns = [
     
     #OLD Token Auth 
     path('register/',auth_views.register ,name='register'),
-    # path('login/',auth_views.login,name='login'),
-    # path('logout/',auth_views.logout,name='logout'),
     
     # NEW JWT AUTH
     path('login/',TokenObtainPairView.as_view()),

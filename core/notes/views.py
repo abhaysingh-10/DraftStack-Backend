@@ -1,7 +1,7 @@
 
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view #for function based views  
+# from rest_framework.decorators import api_view #for function based views  
 from .models import Notes
 from .serializers import NoteSerializer
 from rest_framework import status  # for status code 
