@@ -1,7 +1,6 @@
 # DRAFT STACK — Backend API
 
 Built this while learning Django REST Framework.
-Goal is to become a full Stack Application Developer
 
 ## What I Built
 A notes API where users can register, login and manage 
