@@ -1,4 +1,4 @@
-# Notes App — Backend API
+# DRAFT STACK — Backend API
 
 Built this while learning Django REST Framework.
 Goal is to become a full Stack Application Developer
