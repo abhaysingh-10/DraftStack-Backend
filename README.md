@@ -1,4 +1,4 @@
-# 🚀 Notes App — Django DRF Backend
+#  Notes App — Django DRF Backend
 
 Built this while learning Django REST Framework. This serves as the "Engine" for the Notes App.
 
@@ -15,13 +15,13 @@ A professional-grade Notes API where users can:
 
 _Note: Each user can only access their own data (Protected by permissions)._
 
-## 🏗 Stack
+## Stack
 
 - **Django REST Framework**: For building the API.
 - **SimpleJWT**: For secure, token-based authentication.
 - **SQLite**: Current development database (PostgreSQL ready).
 
-## 🚀 How to Run (For Developers)
+##  How to Run (For Developers)
 
 1. **Clone the repo:** `git clone [your-repo-link]`
 2. **Create Virtual Env:** `python -m venv venv`
@@ -32,7 +32,7 @@ _Note: Each user can only access their own data (Protected by permissions)._
 
 _Server will start at http://127.0.0.1:8000/_
 
-## 📡 API Endpoints (Quick Reference)
+## API Endpoints (Quick Reference)
 
 | Method | Endpoint              | Description                                  |
 | ------ | --------------------- | -------------------------------------------- |
@@ -43,13 +43,13 @@ _Server will start at http://127.0.0.1:8000/_
 
 ---
 
-## 🧠 Where I Struggled
+##  Where I Struggled
 
 - Nested serializers took me a long time to understand.
 - Pagination had a lot of bugs before it worked.
 - JWT logout and blacklisting was confusing at first.
 
-## 🎓 What I Learned
+##  What I Learned
 
 - How REST APIs work end-to-end.
 - JWT authentication flow (Access vs Refresh tokens).
