@@ -4,7 +4,7 @@ Built this while learning Django REST Framework. This serves as the "Engine" for
 
 ---
 
-## 🛠 What I Built
+##  What I Built
 
 A professional-grade Notes API where users can:
 
